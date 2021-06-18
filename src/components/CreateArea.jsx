@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
 
 function CreateArea(props) {
+
+  const [isExpand, setExpand] = useState(false);
 
     const [note, setNote] = useState({
         title: "",
@@ -8,6 +12,7 @@ function CreateArea(props) {
     });
 
     function handleChange(event) {
+      
 
         const {name, value} = event.target;
 
@@ -29,12 +34,33 @@ function CreateArea(props) {
         event.preventDefault();
     }
 
+
+    function handleExpand() {
+      setExpand(true);
+    }
+
   return (
     <div>
       <form>
-        <input onChange={handleChange} value= {note.title} name="title" placeholder="Title" />
-        <textarea onChange= {handleChange} value= {note.content} name="content" placeholder="Take a note..." rows="3" />
-        <button onClick={handleClick}>Add</button>
+
+      {isExpand && <input 
+        onChange={handleChange} 
+        value= {note.title} 
+        name="title" 
+        placeholder="Title" 
+
+        /> }
+        
+        <textarea 
+        onClick= {handleExpand}
+        onChange= {handleChange} 
+        value= {note.content} 
+        name="content" 
+        placeholder="Take a note..." 
+        rows={isExpand ? 3 : 1}
+
+        />
+        <Fab className="button" onClick={handleClick}><AddIcon /></Fab>
       </form>
     </div>
   );
